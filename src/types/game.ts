@@ -13,9 +13,20 @@ export type Card = {
     left: number;
     right: number;
   };
+};
+
+export type CardInPlay = Card & {
   owner: PlayerIndex;
 };
 
 export type GameTileIndices = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
-export type GameBoard = Record<GameTileIndices, Card | null>;
+export type GameBoard = Record<GameTileIndices, CardInPlay | null>;
+
+export type GameRules = "all-open" | "three-open";
+export type GameRule = {
+  name: string;
+  description: string;
+};
+
+export type GameMode = "CARD-SELECTION" | "MATCH" | "GAME-OVER";
