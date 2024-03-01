@@ -16,6 +16,7 @@ interface GameState {
   setRules: (rules: GameRules[]) => void;
   cards: Record<PlayerIndex, Set<AllCardIds>>;
   addCard: (player: PlayerIndex, card: AllCardIds) => void;
+  removeCard: (player: PlayerIndex, card: AllCardIds) => void;
   setCards: (player: PlayerIndex, cards: Set<AllCardIds>) => void;
 }
 
@@ -55,6 +56,13 @@ export const useGameStore = create<GameState>()(
     addCard: (playerIndex, card) =>
       set((state) => {
         state.cards[playerIndex].add(card);
+        return {
+          cards: state.cards,
+        };
+      }),
+    removeCard: (playerIndex, card) =>
+      set((state) => {
+        state.cards[playerIndex].delete(card);
         return {
           cards: state.cards,
         };

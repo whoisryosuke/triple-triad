@@ -1,13 +1,22 @@
 .catalog-card {
-  width: 200px;
-  height: 260px;
+  width: 10rem;
+  height: 13rem;
   background-size: cover;
   background-position: center;
   position: relative;
   border-radius: 6px;
+  font-size: 3rem;
 }
 .catalog-card.selected {
   border: 4px solid teal;
+}
+.catalog-card.small {
+  width: 5rem;
+  height: 6.5rem;
+}
+.catalog-card.small .card-metadata {
+  transform: scale(0.5);
+  transform-origin: top left;
 }
 
 .frame {
@@ -25,7 +34,7 @@
   position: absolute;
   left: 16px;
   top: 16px;
-  font-size: 3rem;
+  font-size: inherit;
   pointer-events: none;
 }
 .card-metadata p {
