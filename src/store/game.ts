@@ -1,9 +1,21 @@
 import * as Tone from "tone";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { Card, GameMode, GameRules, PlayerIndex } from "../types/game";
+import {
+  Card,
+  CardInPlay,
+  GameMode,
+  GameRules,
+  GameTileIndices,
+  PlayerIndex,
+} from "../types/game";
 import { AllCardIds } from "../data/cards";
 // import type {} from "@redux-devtools/extension"; // required for devtools typing
+
+export type CardInPlay = {
+  card: AllCardIds;
+  owner: PlayerIndex;
+};
 
 interface GameState {
   mode: GameMode;
@@ -18,6 +30,9 @@ interface GameState {
   addCard: (player: PlayerIndex, card: AllCardIds) => void;
   removeCard: (player: PlayerIndex, card: AllCardIds) => void;
   setCards: (player: PlayerIndex, cards: Set<AllCardIds>) => void;
+
+  board: Record<GameTileIndices, CardInPlay | undefined>;
+  playCard: (gameTile: GameTileIndices, card: CardInPlay) => void;
 }
 
 export const useGameStore = create<GameState>()(
@@ -72,6 +87,25 @@ export const useGameStore = create<GameState>()(
         cards: {
           ...state.cards,
           [playerIndex]: cards,
+        },
+      })),
+
+    board: {
+      2: undefined,
+      1: undefined,
+      3: undefined,
+      4: undefined,
+      5: undefined,
+      6: undefined,
+      7: undefined,
+      8: undefined,
+      9: undefined,
+    },
+    playCard: (gameTile, card) =>
+      set((state) => ({
+        board: {
+          ...state.board,
+          [gameTile]: card,
         },
       })),
   }))

@@ -15,10 +15,6 @@ export type Card = {
   };
 };
 
-export type CardInPlay = Card & {
-  owner: PlayerIndex;
-};
-
 export type GameTileIndices = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export type GameBoard = Record<GameTileIndices, CardInPlay | null>;
