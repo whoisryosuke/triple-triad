@@ -6,10 +6,10 @@ type Props = {};
 
 const SelectedCards = (props: Props) => {
   const { cards } = useGameStore();
-  const displayCards = cards[1].map((card) => (
-    <CatalogCard card={card} selected />
+  const displayCards = [...cards[1]].map((card) => (
+    <CatalogCard id={card} selected scale={0.5} />
   ));
-  return <div></div>;
+  return <div>{displayCards}</div>;
 };
 
 export default SelectedCards;

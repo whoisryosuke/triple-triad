@@ -2,6 +2,7 @@ import * as Tone from "tone";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { Card, GameMode, GameRules, PlayerIndex } from "../types/game";
+import { AllCardIds } from "../data/cards";
 // import type {} from "@redux-devtools/extension"; // required for devtools typing
 
 interface GameState {
@@ -13,8 +14,9 @@ interface GameState {
   setStartTime: (startTime: number) => void;
   rules: GameRules[];
   setRules: (rules: GameRules[]) => void;
-  cards: Record<PlayerIndex, Card[]>;
-  setCards: (player: PlayerIndex, cards: Card[]) => void;
+  cards: Record<PlayerIndex, Set<AllCardIds>>;
+  addCard: (player: PlayerIndex, card: AllCardIds) => void;
+  setCards: (player: PlayerIndex, cards: Set<AllCardIds>) => void;
 }
 
 export const useGameStore = create<GameState>()(
@@ -26,8 +28,8 @@ export const useGameStore = create<GameState>()(
       })),
 
     score: {
-      1: 0,
-      2: 0,
+      1: 5,
+      2: 5,
     },
     setScore: (playerIndex, score) =>
       set((state) => ({
@@ -47,13 +49,20 @@ export const useGameStore = create<GameState>()(
         rules,
       })),
     cards: {
-      1: [],
-      2: [],
+      1: new Set(),
+      2: new Set(),
     },
+    addCard: (playerIndex, card) =>
+      set((state) => {
+        state.cards[playerIndex].add(card);
+        return {
+          cards: state.cards,
+        };
+      }),
     setCards: (playerIndex, cards) =>
       set((state) => ({
-        score: {
-          ...state.score,
+        cards: {
+          ...state.cards,
           [playerIndex]: cards,
         },
       })),

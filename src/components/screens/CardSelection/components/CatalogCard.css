@@ -6,7 +6,7 @@
   position: relative;
   border-radius: 6px;
 }
-.catalog-card .selected {
+.catalog-card.selected {
   border: 4px solid teal;
 }
 
@@ -26,6 +26,7 @@
   left: 16px;
   top: 16px;
   font-size: 3rem;
+  pointer-events: none;
 }
 .card-metadata p {
   margin: 0;
