@@ -3,7 +3,6 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import {
   Card,
-  CardInPlay,
   GameMode,
   GameRules,
   GameTileIndices,

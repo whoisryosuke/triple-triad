@@ -5,3 +5,11 @@
   background: gray;
   border: 2px solid rgb(90, 90, 90);
 }
+
+.game-board-tile.hovered {
+  background: teal;
+}
+
+.game-board-tile.notice {
+  background: lightgray;
+}

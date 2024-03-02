@@ -15,6 +15,7 @@ const SelectedCards = (props: Props) => {
 
   const displayCards = [...cards[1]].map((card) => (
     <CatalogCard
+      key={card}
       id={card}
       small
       style={{ marginBottom: "8px" }}

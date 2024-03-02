@@ -36,7 +36,6 @@ const CountdownClock = (props: Props) => {
     }
   }, [currentTime]);
 
-  console.log("current time", currentTime);
   const timeRemaining = MATCH_LENGTH_TIME - currentTime;
   const minutes = Math.floor(timeRemaining / 60);
   const seconds = Math.floor(timeRemaining - minutes * 60);

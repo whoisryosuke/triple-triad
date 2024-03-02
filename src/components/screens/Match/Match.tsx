@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useGameStore } from "../../../store/game";
 import CountdownClock from "./components/CountdownClock";
 import GameBoard from "./components/GameBoard";
-import SelectedCards from "../CardSelection/components/SelectedCards";
+import PlayerCards from "./components/PlayerCards";
 
 type Props = {};
 
@@ -13,7 +13,7 @@ const Match = (props: Props) => {
     <div style={{ display: "flex" }}>
       <div>
         <CountdownClock />
-        <SelectedCards />
+        <PlayerCards />
       </div>
       <GameBoard />
     </div>

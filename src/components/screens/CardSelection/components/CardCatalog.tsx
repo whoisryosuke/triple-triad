@@ -17,6 +17,7 @@ const CardCatalog = (props: Props) => {
 
   const displayCards = Object.entries(allCards).map(([id, card]) => (
     <CatalogCard
+      key={id}
       id={id as AllCardIds}
       selected={cards[1].has(id as AllCardIds)}
       onClick={handleAddToCatalog}

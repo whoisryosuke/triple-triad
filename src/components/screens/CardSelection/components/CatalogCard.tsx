@@ -1,9 +1,8 @@
-import React, { CSSProperties } from "react";
-import { Card } from "../../../../types/game";
+import React, { CSSProperties, ForwardedRef, forwardRef } from "react";
 import "./CatalogCard.css";
 import allCards, { AllCardIds } from "../../../../data/cards";
 
-type Props = {
+export type CatalogCardProps = {
   id: AllCardIds;
   selected?: boolean;
   small?: boolean;
@@ -12,21 +11,25 @@ type Props = {
   style?: CSSProperties;
 };
 
-const CatalogCard = ({
-  id,
-  selected = false,
-  onClick,
-  scale = 1,
-  small,
-  style = {},
-  ...props
-}: Props) => {
+const CatalogCard = (
+  {
+    id,
+    selected = false,
+    onClick,
+    scale = 1,
+    small,
+    style = {},
+    ...props
+  }: CatalogCardProps,
+  ref: ForwardedRef<HTMLDivElement>
+) => {
   const card = allCards[id];
   const handleClick = () => {
     onClick?.(id);
   };
   return (
     <div
+      ref={ref}
       className={`catalog-card ${selected ? "selected" : ""} ${
         small ? "small" : ""
       }`}
@@ -48,4 +51,4 @@ const CatalogCard = ({
   );
 };
 
-export default CatalogCard;
+export default forwardRef(CatalogCard);

@@ -8,7 +8,7 @@ const GameBoard = (props: Props) => {
   return (
     <div className="game-board">
       {new Array(9).fill(0).map((_, index) => (
-        <GameBoardTile id={index} />
+        <GameBoardTile key={index} id={index + 1} />
       ))}
     </div>
   );
