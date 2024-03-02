@@ -1,8 +1,6 @@
-import * as Tone from "tone";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import {
-  Card,
   GameMode,
   GameRules,
   GameTileIndices,
@@ -17,12 +15,18 @@ export type CardInPlay = {
 };
 
 interface GameState {
+  // The "router" basically.
   mode: GameMode;
   setMode: (mode: GameMode) => void;
+
   score: Record<PlayerIndex, number>;
   setScore: (player: PlayerIndex, score: number) => void;
   startTime: number;
   setStartTime: (startTime: number) => void;
+  // Who's turn is it?
+  turn: PlayerIndex;
+  setTurn: (turn: PlayerIndex) => void;
+
   rules: GameRules[];
   setRules: (rules: GameRules[]) => void;
   cards: Record<PlayerIndex, Set<AllCardIds>>;
@@ -30,6 +34,7 @@ interface GameState {
   removeCard: (player: PlayerIndex, card: AllCardIds) => void;
   setCards: (player: PlayerIndex, cards: Set<AllCardIds>) => void;
 
+  // Game board
   board: Record<GameTileIndices, CardInPlay | undefined>;
   playCard: (gameTile: GameTileIndices, card: CardInPlay) => void;
 }
@@ -58,6 +63,12 @@ export const useGameStore = create<GameState>()(
       set(() => ({
         startTime,
       })),
+    turn: 1,
+    setTurn: (turn) =>
+      set(() => ({
+        turn,
+      })),
+
     rules: [],
     setRules: (rules) =>
       set(() => ({

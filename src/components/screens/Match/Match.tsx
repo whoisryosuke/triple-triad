@@ -7,12 +7,13 @@ import PlayerCards from "./components/PlayerCards";
 type Props = {};
 
 const Match = (props: Props) => {
-  const { setStartTime } = useGameStore();
+  const { turn } = useGameStore();
 
   return (
     <div style={{ display: "flex" }}>
       <div>
         <CountdownClock />
+        <h3>{turn === 1 ? "Your turn" : "Opponent's turn"}</h3>
         <PlayerCards />
       </div>
       <GameBoard />

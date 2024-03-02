@@ -10,29 +10,36 @@ import { AllCardIds } from "../../../../data/cards";
 type Props = CatalogCardProps;
 
 const GameBoardCard = ({ id }: Props) => {
-  const { playCard } = useGameStore();
+  const { playCard, turn, setTurn } = useGameStore();
 
+  // Setup drag and drop functionality
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ITEM_TYPES.CARD,
     item: { name: id },
+    // Callback when item is dropped
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>();
-      console.log("dropped?", item, dropResult);
       if (item && dropResult) {
-        console.log(`You dropped ${item.name} into ${dropResult.id}!`);
+        // console.log(`You dropped ${item.name} into ${dropResult.id}!`);
 
+        // Play the card!
         playCard(dropResult.id, {
           card: item.name,
           owner: 1,
         });
+        // Change the turns over
+        setTurn(2);
       }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
       handlerId: monitor.getHandlerId(),
     }),
+    // canDrag: () => turn === 1,
   }));
-  return <CatalogCard ref={drag} id={id} selected={isDragging} />;
+  return (
+    <CatalogCard ref={turn === 1 ? drag : null} id={id} selected={isDragging} />
+  );
 };
 
 export default GameBoardCard;
