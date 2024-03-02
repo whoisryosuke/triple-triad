@@ -17,7 +17,10 @@ const PlayerCards = (props: Props) => {
 
   const displayCards = [...cards[1]]
     .filter(
-      (card) => !cardsInPlay.find((cardInPlay) => cardInPlay?.card === card)
+      (card) =>
+        !cardsInPlay.find(
+          (cardInPlay) => cardInPlay?.card === card && cardInPlay.owner === 1
+        )
     )
     .map((card) => (
       <GameBoardCard

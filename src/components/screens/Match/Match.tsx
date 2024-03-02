@@ -3,11 +3,14 @@ import { useGameStore } from "../../../store/game";
 import CountdownClock from "./components/CountdownClock";
 import GameBoard from "./components/GameBoard";
 import PlayerCards from "./components/PlayerCards";
+import OpponentCards from "./components/OpponentCards";
+import { useOpponentAI } from "./hooks/OpponentAI";
 
 type Props = {};
 
 const Match = (props: Props) => {
   const { turn } = useGameStore();
+  useOpponentAI();
 
   return (
     <div style={{ display: "flex" }}>
@@ -17,6 +20,7 @@ const Match = (props: Props) => {
         <PlayerCards />
       </div>
       <GameBoard />
+      <OpponentCards />
     </div>
   );
 };
