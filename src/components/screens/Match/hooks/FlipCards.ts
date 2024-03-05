@@ -3,7 +3,15 @@ import { useGameStore } from "../../../../store/game";
 import { changeOwner } from "../../../../features/card-logic";
 
 export const useFlipCards = () => {
-  const { flips, removeFlip, placeCardOnBoard, board } = useGameStore();
+  const {
+    flips,
+    removeFlip,
+    placeCardOnBoard,
+    board,
+    setEvaluating,
+    setTurn,
+    turn,
+  } = useGameStore();
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -20,6 +28,12 @@ export const useFlipCards = () => {
           removeFlip(flipTile);
         }
       }, 300);
+      console.log("flips", flips);
+      if (flips.length === 0) {
+        setEvaluating(false);
+
+        setTurn(changeOwner(turn));
+      }
     }
 
     return () => {

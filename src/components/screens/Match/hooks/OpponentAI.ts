@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useGameStore } from "../../../../store/game";
 import { AllCardIds } from "../../../../data/cards";
 import { GameTileIndices } from "../../../../types/game";
+import { playCard } from "../../../../features/card-logic";
 
 export const useOpponentAI = () => {
   const { turn, board, placeCardOnBoard, cards, setCards, setTurn } =
@@ -35,7 +36,7 @@ export const useOpponentAI = () => {
       randomCard,
       displayCards
     );
-    placeCardOnBoard(parseInt(randomEmptySlot) as GameTileIndices, {
+    playCard(parseInt(randomEmptySlot) as GameTileIndices, {
       card: randomCard,
       owner: 2,
     });

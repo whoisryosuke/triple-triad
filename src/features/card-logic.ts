@@ -38,6 +38,7 @@ export const playCard = (gameTile: GameTileIndices, card: CardInPlay) => {
   // Figure out adjacent tiles
   const adjacentTiles = ADJACENT_TILES[gameTile];
   // Go through each tile and check ownership of card
+  let noFlips = true;
   adjacentTiles.forEach((tileIndex) => {
     console.log("[CARD LOGIC] Checking all adjacent tiles");
     // Only check opponents cards
@@ -57,6 +58,7 @@ export const playCard = (gameTile: GameTileIndices, card: CardInPlay) => {
         if (cardData.value.bottom > checkCardData.value.top) {
           // Flip card!
           queueFlip(currentIndex);
+          noFlips = false;
         }
       }
       if (isAbove) {
@@ -65,6 +67,7 @@ export const playCard = (gameTile: GameTileIndices, card: CardInPlay) => {
         if (cardData.value.top > checkCardData.value.bottom) {
           // Flip card!
           queueFlip(currentIndex);
+          noFlips = false;
         }
       }
       // Is horizontal
@@ -77,6 +80,7 @@ export const playCard = (gameTile: GameTileIndices, card: CardInPlay) => {
         if (cardData.value.right > checkCardData.value.left) {
           // Flip card!
           queueFlip(currentIndex);
+          noFlips = false;
         }
       }
       if (isLeft) {
@@ -85,15 +89,17 @@ export const playCard = (gameTile: GameTileIndices, card: CardInPlay) => {
         if (cardData.value.left > checkCardData.value.right) {
           // Flip card!
           queueFlip(currentIndex);
+          noFlips = false;
         }
       }
     }
   });
+  if (noFlips) {
+    setEvaluating(false);
 
-  // Change the turns over
-  setTurn(2);
-
-  setEvaluating(false);
+    // Change the turns over
+    setTurn(changeOwner(owner));
+  }
 };
 
 export const changeOwner = (currentOwner: PlayerIndex): PlayerIndex => {
