@@ -5,12 +5,12 @@ import CatalogCard, {
 import { DropResult, ITEM_TYPES } from "../../../../constants/dnd";
 import { useDrag } from "react-dnd";
 import { useGameStore } from "../../../../store/game";
-import { AllCardIds } from "../../../../data/cards";
+import { playCard } from "../../../../features/card-logic";
 
 type Props = CatalogCardProps;
 
 const GameBoardCard = ({ id }: Props) => {
-  const { playCard, turn, setTurn } = useGameStore();
+  const { evaluating, turn } = useGameStore();
 
   // Setup drag and drop functionality
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -27,8 +27,6 @@ const GameBoardCard = ({ id }: Props) => {
           card: item.name,
           owner: 1,
         });
-        // Change the turns over
-        setTurn(2);
       }
     },
     collect: (monitor) => ({
@@ -37,8 +35,16 @@ const GameBoardCard = ({ id }: Props) => {
     }),
     // canDrag: () => turn === 1,
   }));
+
+  const isPlayersTurn = turn === 1;
+  const isGameEvaluating = !evaluating;
+
   return (
-    <CatalogCard ref={turn === 1 ? drag : null} id={id} selected={isDragging} />
+    <CatalogCard
+      ref={isPlayersTurn && isGameEvaluating ? drag : null}
+      id={id}
+      selected={isDragging}
+    />
   );
 };
 

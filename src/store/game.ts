@@ -26,6 +26,11 @@ interface GameState {
   // Who's turn is it?
   turn: PlayerIndex;
   setTurn: (turn: PlayerIndex) => void;
+  evaluating: boolean;
+  setEvaluating: (evaluating: boolean) => void;
+  flips: GameTileIndices[];
+  queueFlip: (index: GameTileIndices) => void;
+  removeFlip: (index: GameTileIndices) => void;
 
   rules: GameRules[];
   setRules: (rules: GameRules[]) => void;
@@ -36,7 +41,7 @@ interface GameState {
 
   // Game board
   board: Record<GameTileIndices, CardInPlay | undefined>;
-  playCard: (gameTile: GameTileIndices, card: CardInPlay) => void;
+  placeCardOnBoard: (gameTile: GameTileIndices, card: CardInPlay) => void;
 }
 
 export const useGameStore = create<GameState>()(
@@ -67,6 +72,20 @@ export const useGameStore = create<GameState>()(
     setTurn: (turn) =>
       set(() => ({
         turn,
+      })),
+    evaluating: false,
+    setEvaluating: (evaluating) =>
+      set(() => ({
+        evaluating,
+      })),
+    flips: [],
+    queueFlip: (index) =>
+      set((state) => ({
+        flips: [...state.flips, index],
+      })),
+    removeFlip: (index) =>
+      set((state) => ({
+        flips: state.flips.filter((flipIndex) => flipIndex !== index),
       })),
 
     rules: [],
@@ -111,7 +130,7 @@ export const useGameStore = create<GameState>()(
       8: undefined,
       9: undefined,
     },
-    playCard: (gameTile, card) =>
+    placeCardOnBoard: (gameTile, card) =>
       set((state) => ({
         board: {
           ...state.board,

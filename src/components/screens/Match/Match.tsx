@@ -5,12 +5,16 @@ import GameBoard from "./components/GameBoard";
 import PlayerCards from "./components/PlayerCards";
 import OpponentCards from "./components/OpponentCards";
 import { useOpponentAI } from "./hooks/OpponentAI";
+import { useFlipCards } from "./hooks/FlipCards";
 
 type Props = {};
 
 const Match = (props: Props) => {
-  const { turn } = useGameStore();
+  const { turn, board } = useGameStore();
   useOpponentAI();
+  useFlipCards();
+
+  console.log("[MATCH] Board", board);
 
   return (
     <div style={{ display: "flex" }}>

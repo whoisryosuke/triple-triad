@@ -30,11 +30,23 @@ const GameBoardTile = ({ id, ...props }: Props) => {
     state = "notice";
   }
 
-  const tileCard = board[id as GameTileIndices]?.card;
+  const currentTileIndex = id as GameTileIndices;
+  const currentTile = board[currentTileIndex];
+  const tileCard = currentTile?.card;
 
   return (
     <div ref={drop} className={`game-board-tile ${state}`} {...props}>
-      {tileCard && <CatalogCard id={tileCard} />}
+      {tileCard && currentTile && (
+        <div
+          style={{
+            border: "3px solid",
+            borderRadius: "4px",
+            borderColor: currentTile.owner === 1 ? "blue" : "red",
+          }}
+        >
+          <CatalogCard id={tileCard} />
+        </div>
+      )}
     </div>
   );
 };

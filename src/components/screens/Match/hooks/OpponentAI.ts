@@ -4,7 +4,8 @@ import { AllCardIds } from "../../../../data/cards";
 import { GameTileIndices } from "../../../../types/game";
 
 export const useOpponentAI = () => {
-  const { turn, board, playCard, cards, setCards, setTurn } = useGameStore();
+  const { turn, board, placeCardOnBoard, cards, setCards, setTurn } =
+    useGameStore();
   const emptySlots = Object.entries(board).filter(
     ([tileId, card]) => card === undefined
   );
@@ -34,7 +35,7 @@ export const useOpponentAI = () => {
       randomCard,
       displayCards
     );
-    playCard(randomEmptySlot as GameTileIndices, {
+    placeCardOnBoard(parseInt(randomEmptySlot) as GameTileIndices, {
       card: randomCard,
       owner: 2,
     });
