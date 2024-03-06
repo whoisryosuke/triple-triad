@@ -17,13 +17,6 @@ const CountdownClock = (props: Props) => {
   // console.log("[CLOCK] currentTime", currentTime);
 
   const animate = (time: number) => {
-    console.log(
-      "[CLOCK] Tick tock.",
-      prevTime.current,
-      time,
-      prevStartTime.current
-    );
-
     // No previous time? Assume it's the current time.
     // When we reset game, the RAF time keeps going, so zeroing breaks time
     if (prevTime.current === 0) prevTime.current = time;
