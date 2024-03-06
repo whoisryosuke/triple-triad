@@ -14,7 +14,7 @@ const CountdownClock = (props: Props) => {
     ReturnType<typeof requestAnimationFrame> | undefined
   >();
 
-  console.log("[CLOCK] currentTime", currentTime);
+  // console.log("[CLOCK] currentTime", currentTime);
 
   const animate = (time: number) => {
     console.log(
@@ -36,7 +36,6 @@ const CountdownClock = (props: Props) => {
 
     // Set time. We use time value from RAF.
     const deltaTime = time - prevTime.current;
-    console.log("[CLOCK] Delta time", deltaTime * 0.01);
     setCurrentTime((state) => state + deltaTime * 0.01);
     prevTime.current = time;
   };
@@ -54,19 +53,10 @@ const CountdownClock = (props: Props) => {
   useEffect(() => {
     if (currentTime > MATCH_LENGTH_TIME && isPlaying.current) {
       setMode("GAME-OVER");
-      console.log("game over", currentTime);
+      console.log("[CLOCK] Game over - time ran out", currentTime);
       isPlaying.current = false;
     }
   }, [currentTime]);
-
-  // // Trigger "Game Over" screen when time has run out
-  // useEffect(() => {
-  //   if (mode === "MATCH") {
-  //     console.log("[CLOCK] Resetting clock");
-  //     isPlaying.current = true;
-  //     setCurrentTime(0);
-  //   }
-  // }, [mode]);
 
   // Reset the clock if new game
   useEffect(() => {
