@@ -4,6 +4,9 @@
 
   background: gray;
   border: 2px solid rgb(90, 90, 90);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .game-board-tile.hovered {
@@ -12,4 +15,57 @@
 
 .game-board-tile.notice {
   background: lightgray;
+}
+
+/* The animation code */
+@keyframes card-flip {
+  from {
+    transform: rotateY(180deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
+
+/* 
+.game-board-tile:hover .card {
+  transform: rotateY(180deg);
+}
+
+.game-board-tile:hover .card::after {
+  transform: rotateY(0deg);
+} */
+
+.game-board-tile .card {
+  border: 3px solid;
+  border-radius: 4px;
+
+  position: relative;
+
+  perspective: 1000px;
+  animation-name: card-flip;
+  animation-duration: 710ms;
+  transition: border-color 400ms ease-in, transform 710ms ease-in;
+  backface-visibility: hidden;
+}
+
+.game-board-tile .card::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgb(81, 43, 17);
+  border: 4px solid gold;
+  border-radius: 4px;
+
+  perspective: 1000px;
+  transform: rotateY(180deg);
+  animation-name: card-flip;
+  animation-duration: 710ms;
+  animation-direction: reverse;
+
+  transition: transform 420ms ease-in;
+  backface-visibility: hidden;
 }

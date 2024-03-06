@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./GameBoardTile.css";
 import { useDrop } from "react-dnd";
 import { DropResult, ITEM_TYPES } from "../../../../constants/dnd";
 import CatalogCard from "../../CardSelection/components/CatalogCard";
 import { useGameStore } from "../../../../store/game";
-import { GameTileIndices } from "../../../../types/game";
+import { GameTileIndices, PlayerIndex } from "../../../../types/game";
 
 type Props = {
   id: number;
@@ -12,6 +12,7 @@ type Props = {
 
 const GameBoardTile = ({ id, ...props }: Props) => {
   const { board } = useGameStore();
+  const prevOwner = useRef<PlayerIndex | null>(null);
 
   const currentTileIndex = id as GameTileIndices;
   const currentTile = board[currentTileIndex];
@@ -42,13 +43,25 @@ const GameBoardTile = ({ id, ...props }: Props) => {
     state = "notice";
   }
 
+  useEffect(() => {
+    // No owner? Hydrate with original owner of card
+    if (!prevOwner.current && currentTile?.owner) {
+      prevOwner.current = currentTile.owner;
+    }
+
+    // Owner exists and is different? Update!
+    if (prevOwner.current && prevOwner.current === currentTile?.currentOwner) {
+      // Trigger animation here?
+      prevOwner.current = currentTile.currentOwner;
+    }
+  }, [currentTile]);
+
   return (
     <div ref={drop} className={`game-board-tile ${state}`} {...props}>
       {tileCard && currentTile && (
         <div
+          className="card"
           style={{
-            border: "3px solid",
-            borderRadius: "4px",
             borderColor: currentTile.currentOwner === 1 ? "blue" : "red",
           }}
         >
