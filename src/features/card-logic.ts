@@ -18,7 +18,6 @@ export const playCard = (gameTile: GameTileIndices, card: CardInPlay) => {
   console.log("[CARD LOGIC] Starting...");
   const {
     placeCardOnBoard,
-    turn,
     setTurn,
     evaluating,
     setEvaluating,
@@ -95,10 +94,10 @@ export const playCard = (gameTile: GameTileIndices, card: CardInPlay) => {
     }
   });
   if (noFlips) {
-    setEvaluating(false);
-
+    console.log("[CARD LOGIC] No flips detected, changing turn", card.owner);
     // Change the turns over
-    setTurn(changeOwner(turn));
+    setTurn(changeOwner(card.owner));
+    setEvaluating(false);
   }
 };
 

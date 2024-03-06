@@ -1,15 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useGameStore } from "../../../../store/game";
 import { AllCardIds } from "../../../../data/cards";
 import { GameTileIndices } from "../../../../types/game";
 import { playCard } from "../../../../features/card-logic";
 
 export const useOpponentAI = () => {
-  const { turn, board, placeCardOnBoard, cards, setCards, setTurn } =
-    useGameStore();
+  const { turn, board, cards } = useGameStore();
+  // Keep track if opponent's turn is active
+  // This prevents multiple re-renders triggering extra "moves"
+  const isPlaying = useRef(false);
+
+  // Get empty grid tiles
   const emptySlots = Object.entries(board).filter(
     ([tileId, card]) => card === null
   );
+  // Keep an array of all cards on the board for reference
   const cardsInPlay = Object.values(board);
 
   const enemyMove = () => {
@@ -46,9 +51,14 @@ export const useOpponentAI = () => {
 
   // If it's the opponent's turn, handle their move
   useEffect(() => {
-    console.log("[ENEMY TURN] Checking for turn", emptySlots.length);
-    if (turn === 2 && emptySlots.length > 0) {
+    // Is it opponent's turn? And is there an empty slot?
+    if (turn === 2 && emptySlots.length > 0 && !isPlaying.current) {
+      isPlaying.current = true;
       enemyMove();
+    }
+    // We reset the flag when we detect the turn officially switch
+    if (turn === 1) {
+      isPlaying.current = false;
     }
   }, [turn]);
 };
