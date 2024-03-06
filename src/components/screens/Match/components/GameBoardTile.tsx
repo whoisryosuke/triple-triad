@@ -59,12 +59,7 @@ const GameBoardTile = ({ id, ...props }: Props) => {
   return (
     <div ref={drop} className={`game-board-tile ${state}`} {...props}>
       {tileCard && currentTile && (
-        <div
-          className="card"
-          style={{
-            borderColor: currentTile.currentOwner === 1 ? "blue" : "red",
-          }}
-        >
+        <div className="card">
           <CatalogCard id={tileCard} owner={currentTile.currentOwner} />
         </div>
       )}
