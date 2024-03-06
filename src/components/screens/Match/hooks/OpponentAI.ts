@@ -9,6 +9,7 @@ export const useOpponentAI = () => {
   // Keep track if opponent's turn is active
   // This prevents multiple re-renders triggering extra "moves"
   const isPlaying = useRef(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Get empty grid tiles
   const emptySlots = Object.entries(board).filter(
@@ -54,11 +55,23 @@ export const useOpponentAI = () => {
     // Is it opponent's turn? And is there an empty slot?
     if (turn === 2 && emptySlots.length > 0 && !isPlaying.current) {
       isPlaying.current = true;
-      enemyMove();
+
+      const min = 600;
+      const max = 1500;
+      const randomWaitTime = Math.floor(Math.random() * (max - min + 1) + min);
+
+      timeoutRef.current = setTimeout(enemyMove, randomWaitTime);
     }
     // We reset the flag when we detect the turn officially switch
     if (turn === 1) {
       isPlaying.current = false;
     }
+
+    return () => {
+      if (timeoutRef.current) {
+        isPlaying.current = false;
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [turn]);
 };
