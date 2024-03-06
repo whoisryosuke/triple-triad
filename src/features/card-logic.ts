@@ -1,6 +1,6 @@
 import cards from "../data/cards";
-import { CardInPlay, useGameStore } from "../store/game";
-import { GameTileIndices, PlayerIndex } from "../types/game";
+import { useGameStore } from "../store/game";
+import { CardInPlay, GameTileIndices, PlayerIndex } from "../types/game";
 
 const ADJACENT_TILES = {
   1: [2, 4],
@@ -27,7 +27,7 @@ export const playCard = (gameTile: GameTileIndices, card: CardInPlay) => {
   } = useGameStore.getState();
 
   const cardData = cards[card.card];
-  const owner = card.owner;
+  const owner = card.currentOwner;
 
   setEvaluating(true);
 
@@ -44,7 +44,7 @@ export const playCard = (gameTile: GameTileIndices, card: CardInPlay) => {
     // Only check opponents cards
     const currentIndex = tileIndex as GameTileIndices;
     const currentTile = board[currentIndex];
-    if (currentTile && currentTile?.owner !== owner) {
+    if (currentTile && currentTile?.currentOwner !== owner) {
       const checkCardData = cards[currentTile.card];
 
       // What direction is this card relative to newly dropped card?
@@ -98,7 +98,7 @@ export const playCard = (gameTile: GameTileIndices, card: CardInPlay) => {
     setEvaluating(false);
 
     // Change the turns over
-    setTurn(changeOwner(owner));
+    setTurn(changeOwner(turn));
   }
 };
 

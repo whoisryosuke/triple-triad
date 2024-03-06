@@ -6,25 +6,33 @@ import PlayerCards from "./components/PlayerCards";
 import OpponentCards from "./components/OpponentCards";
 import { useOpponentAI } from "./hooks/OpponentAI";
 import { useFlipCards } from "./hooks/FlipCards";
+import GameOverMessage from "./components/GameOverMessage";
+import MatchScore from "./components/MatchScore";
+import useGameComplete from "./hooks/GameComplete";
 
 type Props = {};
 
 const Match = (props: Props) => {
-  const { turn, board } = useGameStore();
+  const { turn, board, mode } = useGameStore();
   useOpponentAI();
   useFlipCards();
+  useGameComplete();
 
   console.log("[MATCH] Board", board);
+  console.log("[MATCH] Mode", mode);
+  console.log("[MATCH] Who's turn?", turn);
 
   return (
     <div style={{ display: "flex" }}>
       <div>
         <CountdownClock />
         <h3>{turn === 1 ? "Your turn" : "Opponent's turn"}</h3>
+        <MatchScore />
         <PlayerCards />
       </div>
       <GameBoard />
       <OpponentCards />
+      {mode === "GAME-OVER" && <GameOverMessage />}
     </div>
   );
 };

@@ -8,7 +8,7 @@ export const useOpponentAI = () => {
   const { turn, board, placeCardOnBoard, cards, setCards, setTurn } =
     useGameStore();
   const emptySlots = Object.entries(board).filter(
-    ([tileId, card]) => card === undefined
+    ([tileId, card]) => card === null
   );
   const cardsInPlay = Object.values(board);
 
@@ -27,6 +27,7 @@ export const useOpponentAI = () => {
     );
     const randomCardIndex = Math.floor(Math.random() * displayCards.length);
     const randomCard = displayCards[randomCardIndex];
+    if (!randomCard) return;
 
     // Play it
     console.log(
@@ -39,30 +40,15 @@ export const useOpponentAI = () => {
     playCard(parseInt(randomEmptySlot) as GameTileIndices, {
       card: randomCard,
       owner: 2,
+      currentOwner: 2,
     });
-
-    // Finish turn
-    setTurn(1);
   };
 
   // If it's the opponent's turn, handle their move
   useEffect(() => {
+    console.log("[ENEMY TURN] Checking for turn", emptySlots.length);
     if (turn === 2 && emptySlots.length > 0) {
       enemyMove();
     }
   }, [turn]);
-
-  // Hydrate opponents cards
-  useEffect(() => {
-    if (cards[2].size === 0) {
-      const opponentCards = new Set([
-        "sample1",
-        "sample2",
-        "sample3",
-        "sample4",
-        "sample5",
-      ] as AllCardIds[]);
-      setCards(2, opponentCards);
-    }
-  }, [cards[2]]);
 };

@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import {
+  CardInPlay,
+  GameBoard,
   GameMode,
   GameRules,
   GameTileIndices,
@@ -9,9 +11,16 @@ import {
 import { AllCardIds } from "../data/cards";
 // import type {} from "@redux-devtools/extension"; // required for devtools typing
 
-export type CardInPlay = {
-  card: AllCardIds;
-  owner: PlayerIndex;
+const DEFAULT_GAME_BOARD: GameBoard = {
+  2: null,
+  1: null,
+  3: null,
+  4: null,
+  5: null,
+  6: null,
+  7: null,
+  8: null,
+  9: null,
 };
 
 interface GameState {
@@ -38,10 +47,12 @@ interface GameState {
   addCard: (player: PlayerIndex, card: AllCardIds) => void;
   removeCard: (player: PlayerIndex, card: AllCardIds) => void;
   setCards: (player: PlayerIndex, cards: Set<AllCardIds>) => void;
+  resetCards: () => void;
 
   // Game board
-  board: Record<GameTileIndices, CardInPlay | undefined>;
+  board: GameBoard;
   placeCardOnBoard: (gameTile: GameTileIndices, card: CardInPlay) => void;
+  resetBoard: () => void;
 }
 
 export const useGameStore = create<GameState>()(
@@ -53,8 +64,8 @@ export const useGameStore = create<GameState>()(
       })),
 
     score: {
-      1: 5,
-      2: 5,
+      1: 0,
+      2: 0,
     },
     setScore: (playerIndex, score) =>
       set((state) => ({
@@ -118,24 +129,25 @@ export const useGameStore = create<GameState>()(
           [playerIndex]: cards,
         },
       })),
+    resetCards: () =>
+      set(() => ({
+        cards: {
+          1: new Set(),
+          2: new Set(),
+        },
+      })),
 
-    board: {
-      2: undefined,
-      1: undefined,
-      3: undefined,
-      4: undefined,
-      5: undefined,
-      6: undefined,
-      7: undefined,
-      8: undefined,
-      9: undefined,
-    },
+    board: DEFAULT_GAME_BOARD,
     placeCardOnBoard: (gameTile, card) =>
       set((state) => ({
         board: {
           ...state.board,
           [gameTile]: card,
         },
+      })),
+    resetBoard: () =>
+      set((state) => ({
+        board: DEFAULT_GAME_BOARD,
       })),
   }))
 );

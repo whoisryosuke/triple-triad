@@ -26,6 +26,7 @@ const GameBoardCard = ({ id }: Props) => {
         playCard(dropResult.id, {
           card: item.name,
           owner: 1,
+          currentOwner: 1,
         });
       }
     },

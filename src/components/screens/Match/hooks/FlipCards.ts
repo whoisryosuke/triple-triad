@@ -8,36 +8,44 @@ export const useFlipCards = () => {
     removeFlip,
     placeCardOnBoard,
     board,
+    evaluating,
     setEvaluating,
     setTurn,
     turn,
   } = useGameStore();
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isFlipping = useRef<boolean>(false);
 
   useEffect(() => {
-    if (flips.length > 0) {
+    if (evaluating && flips.length > 0) {
+      // Remember that we've started flipping
+      isFlipping.current = true;
       timeoutRef.current = setTimeout(() => {
         const flipTile = flips[0];
         const currentCard = board[flipTile];
         if (currentCard) {
+          // Update the card with new owner
           const updatedCard = {
             ...currentCard,
-            owner: changeOwner(currentCard.owner),
+            currentOwner: changeOwner(currentCard.currentOwner),
           };
           placeCardOnBoard(flipTile, updatedCard);
+
+          // Remove from the flip queue
           removeFlip(flipTile);
         }
       }, 300);
-      console.log("flips", flips);
-      if (flips.length === 0) {
-        setEvaluating(false);
-
-        setTurn(changeOwner(turn));
-      }
+    }
+    console.log("flips", flips);
+    if (evaluating && flips.length === 0 && isFlipping.current) {
+      console.log("[FLIP] Changing turns");
+      setEvaluating(false);
+      setTurn(changeOwner(turn));
+      isFlipping.current = false;
     }
 
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [flips]);
+  }, [evaluating, flips]);
 };

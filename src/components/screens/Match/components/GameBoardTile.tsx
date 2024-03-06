@@ -41,7 +41,7 @@ const GameBoardTile = ({ id, ...props }: Props) => {
           style={{
             border: "3px solid",
             borderRadius: "4px",
-            borderColor: currentTile.owner === 1 ? "blue" : "red",
+            borderColor: currentTile.currentOwner === 1 ? "blue" : "red",
           }}
         >
           <CatalogCard id={tileCard} />

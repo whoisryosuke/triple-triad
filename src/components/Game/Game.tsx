@@ -18,7 +18,7 @@ const Game = (props: Props) => {
       Route = Match;
       break;
     case "GAME-OVER":
-      Route = GameOver;
+      Route = Match;
       break;
   }
   return <Route />;
