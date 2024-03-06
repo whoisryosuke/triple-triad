@@ -22,6 +22,7 @@ const CardCatalog = (props: Props) => {
       selected={cards[1].has(id as AllCardIds)}
       onClick={handleAddToCatalog}
       style={{ margin: 8 }}
+      owner={1}
     />
   ));
   return <div className="card-catalog">{displayCards}</div>;

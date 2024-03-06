@@ -27,6 +27,7 @@ const PlayerCards = (props: Props) => {
         key={card}
         id={card}
         small
+        owner={1}
         style={{ marginBottom: "8px" }}
         onClick={handleRemoveCard}
       />

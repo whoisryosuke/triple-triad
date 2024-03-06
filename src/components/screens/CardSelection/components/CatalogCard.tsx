@@ -1,12 +1,14 @@
 import React, { CSSProperties, ForwardedRef, forwardRef } from "react";
 import "./CatalogCard.css";
 import allCards, { AllCardIds } from "../../../../data/cards";
+import { PlayerIndex } from "../../../../types/game";
 
 export type CatalogCardProps = {
   id: AllCardIds;
   selected?: boolean;
   small?: boolean;
   scale?: CSSProperties["width"];
+  owner: PlayerIndex;
   onClick?: (card: AllCardIds) => void;
   style?: CSSProperties;
 };
@@ -18,6 +20,7 @@ const CatalogCard = (
     onClick,
     scale = 1,
     small,
+    owner,
     style = {},
     ...props
   }: CatalogCardProps,
@@ -32,15 +35,15 @@ const CatalogCard = (
       ref={ref}
       className={`catalog-card ${selected ? "selected" : ""} ${
         small ? "small" : ""
-      }`}
+      } ${owner === 1 ? "player" : "opponent"}`}
       style={{
-        backgroundImage: `url(/assets/cards/${card.img})`,
         transform: `scale(${scale})`,
         ...style,
       }}
       onClick={handleClick}
     >
       <div className="frame" />
+      <img src={`/assets/cards/${card.img}`} alt={card.name} />
       <div className="card-metadata">
         <p className="vertical top">{card.value.top}</p>
         <p className="vertical bottom">{card.value.bottom}</p>

@@ -65,7 +65,7 @@ const GameBoardTile = ({ id, ...props }: Props) => {
             borderColor: currentTile.currentOwner === 1 ? "blue" : "red",
           }}
         >
-          <CatalogCard id={tileCard} />
+          <CatalogCard id={tileCard} owner={currentTile.currentOwner} />
         </div>
       )}
     </div>

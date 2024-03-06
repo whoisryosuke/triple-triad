@@ -18,7 +18,13 @@ const OpponentCards = (props: Props) => {
         )
     )
     .map((card) => (
-      <CatalogCard key={card} id={card} small style={{ marginBottom: "8px" }} />
+      <CatalogCard
+        key={card}
+        id={card}
+        small
+        owner={2}
+        style={{ marginBottom: "8px" }}
+      />
     ));
   return <div className="selected-cards">{displayCards}</div>;
 };
