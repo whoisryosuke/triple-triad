@@ -23,7 +23,13 @@ const Match = (props: Props) => {
   console.log("[MATCH] Who's turn?", turn);
 
   return (
-    <div style={{ display: "flex" }}>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <div>
         <CountdownClock />
         <h3>{turn === 1 ? "Your turn" : "Opponent's turn"}</h3>

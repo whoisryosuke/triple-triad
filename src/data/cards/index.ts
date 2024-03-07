@@ -3,6 +3,7 @@ import servbot from "./servbot";
 
 const SAMPLE_CARD1: Card = {
   ...servbot,
+  img: "servbot-ohno.png",
   value: {
     top: 2,
     bottom: 3,
@@ -13,6 +14,7 @@ const SAMPLE_CARD1: Card = {
 
 const SAMPLE_CARD2: Card = {
   ...servbot,
+  img: "servbot-ohno2.png",
   value: {
     top: 5,
     bottom: 4,
@@ -23,6 +25,7 @@ const SAMPLE_CARD2: Card = {
 
 const SAMPLE_CARD3: Card = {
   ...servbot,
+  img: "servbot-ohno3.png",
   value: {
     top: 8,
     bottom: 2,
