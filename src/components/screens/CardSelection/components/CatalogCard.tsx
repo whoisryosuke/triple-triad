@@ -42,8 +42,10 @@ const CatalogCard = (
       }}
       onClick={handleClick}
     >
-      <div className="frame" />
+      <div className="opponent" style={{ opacity: owner === 2 ? 1 : 0 }} />
+      <div className="player" style={{ opacity: owner === 1 ? 1 : 0 }} />
       <img src={`/assets/cards/${card.img}`} alt={card.name} />
+      <div className="frame" />
       <div className="card-metadata">
         <p className="vertical top">{card.value.top}</p>
         <p className="vertical bottom">{card.value.bottom}</p>

@@ -45,7 +45,7 @@
   perspective: 1000px;
   animation-name: card-flip;
   animation-duration: 710ms;
-  transition: border-color 400ms ease-in, transform 710ms ease-in;
+  transition: transform 710ms ease-in;
   backface-visibility: hidden;
 }
 
