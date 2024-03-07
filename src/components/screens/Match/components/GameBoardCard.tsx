@@ -9,7 +9,7 @@ import { playCard } from "../../../../features/card-logic";
 
 type Props = CatalogCardProps;
 
-const GameBoardCard = ({ id, owner }: Props) => {
+const GameBoardCard = ({ id, ...props }: Props) => {
   const { evaluating, turn } = useGameStore();
 
   // Setup drag and drop functionality
@@ -44,7 +44,7 @@ const GameBoardCard = ({ id, owner }: Props) => {
     <CatalogCard
       ref={isPlayersTurn && isGameEvaluating ? drag : null}
       id={id}
-      owner={owner}
+      {...props}
       selected={isDragging}
     />
   );

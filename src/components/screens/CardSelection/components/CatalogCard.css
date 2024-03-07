@@ -5,6 +5,7 @@
   background-position: center;
   position: relative;
   border-radius: 6px;
+  overflow: hidden;
   font-size: 3rem;
   display: flex;
   align-items: center;
@@ -18,7 +19,7 @@
   height: 6.5rem;
 }
 .catalog-card.small .card-metadata {
-  transform: scale(0.5);
+  transform: scale(0.42);
   transform-origin: top left;
 }
 .catalog-card .player {
